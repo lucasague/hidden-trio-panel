@@ -1,0 +1,6 @@
+// Configuración pública del panel (la clave pública solo sirve para cifrar; la privada está en el PC de Lucas)
+window.CONFIG = {
+ "repo": "lucasague/hidden-trio-datos",
+ "rama": "main",
+ "clavePublica": "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEApfwh1W1/u5AQbjiPxHy6Sr6n6pDeJDxYdtfXXig63mivn3KFP8EyeXMF5zCc7A5HUXKsF1/zo5E1ReKx7rablzHUnAFbMO89u0YLHd4GMVWXajJRKEwVHsBhRimmHcztfAqmmLkw4+jQOxtv9SDofrCtVgghHbYX18dA3zJlxZ7dajFC4ozDb6el44SeLIecEQCYJTn/CEwP8VFDpW2E3k1xhSG80r+FY46KaPRCA4v262QiSDUK6IYz/AbIvQHrtrWQdbDYXwMxaMuB6VvfbTQv9zzQ2uRiSFsb1eUNxHIA5hYKGpD46wd67h0h+U20g1NPBvzoHG1PfXw+/QLGPifXWeILUk7nwpRWkFyXRTMQayrKudXIqHOSaiBDDuLsyMlAqSJSEWAiEuAyfI50QLVxtazmiMoz6NQA3KzYGTQgn2RdlT/rmFxAnK0FhsThjDNLF0l7Mgki31owslukZacnNioarLmLeOvkwJUTODzPau/YOqPG6jv4+PPmijExAgMBAAE="
+};

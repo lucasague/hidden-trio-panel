@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
 <title>Hidden Trio · Panel</title>
 <style>
   :root { color-scheme:dark; --fondo:#0a1322; --caja:#111e33; --borde:#22344f; --texto:#e8eef7; --suave:#8fa3bd; --azul:#a6d9f5; --crema:#f8f3e6; --ok:#7fd6a0; --mal:#f08a7c; --espera:#f2cf7a; }
@@ -12,37 +13,47 @@
   header { padding:22px 20px 8px; max-width:1080px; margin:auto; display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; }
   header h1 { margin:0; font-size:15px; letter-spacing:.42em; font-weight:400; color:var(--azul); }
   header span { color:var(--suave); font-size:14px; }
-  nav { max-width:1080px; margin:auto; padding:8px 20px 0; display:flex; gap:6px; border-bottom:1px solid var(--borde); }
-  nav button { background:none; border:0; color:var(--suave); font:inherit; padding:10px 14px; cursor:pointer; border-bottom:2px solid transparent; }
+  nav { max-width:1080px; margin:auto; padding:8px 20px 0; display:flex; gap:2px; border-bottom:1px solid var(--borde); overflow-x:auto; }
+  nav button { background:none; border:0; color:var(--suave); font:inherit; padding:10px 14px; cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; }
   nav button.activa { color:var(--crema); border-color:var(--azul); }
   main { max-width:1080px; margin:auto; padding:20px; }
   .caja { background:var(--caja); border:1px solid var(--borde); border-radius:12px; padding:18px; margin-bottom:18px; }
   h2 { margin:0 0 4px; font-size:22px; color:var(--crema); }
   h3 { margin:0 0 10px; font-size:17px; color:var(--crema); }
-  p.nota { color:var(--suave); font-size:14px; margin:4px 0 12px; }
+  h4 { margin:18px 0 6px; font-size:14px; color:var(--azul); font-weight:600; }
+  p.nota, small.nota { color:var(--suave); font-size:14px; } p.nota { margin:4px 0 12px; }
   label { display:block; font-size:13px; color:var(--suave); margin:12px 0 4px; }
   input, textarea, select { width:100%; background:#0a1526; border:1px solid var(--borde); color:var(--texto); border-radius:8px; padding:9px 11px; font:inherit; }
+  input[type=file] { padding:7px; } input[type=checkbox], input[type=radio] { width:auto; margin-right:6px; }
   textarea { min-height:150px; resize:vertical; }
   .fila { display:flex; gap:12px; flex-wrap:wrap; } .fila > div { flex:1; min-width:150px; }
   button.b { background:var(--azul); color:#06121f; border:0; border-radius:8px; padding:9px 16px; font:inherit; font-weight:600; cursor:pointer; }
   button.b.sec { background:none; color:var(--azul); border:1px solid var(--borde); font-weight:400; }
   button.b.mal { background:none; color:var(--mal); border:1px solid var(--borde); font-weight:400; }
   button.b:disabled { opacity:.5; cursor:wait; }
-  .botones { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .botones { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; align-items:center; }
   .estado { font-size:13px; padding:2px 10px; border-radius:20px; border:1px solid currentColor; white-space:nowrap; }
   .e-espera { color:var(--espera); } .e-ok { color:var(--ok); } .e-mal { color:var(--mal); } .e-gris { color:var(--suave); }
   .cab { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
-  .shorts { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:14px; margin-top:14px; }
+  .cab .izq { display:flex; gap:14px; align-items:center; }
+  .cab img.car { width:64px; height:64px; object-fit:cover; border-radius:6px; }
+  .shorts, .galeria { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:14px; margin-top:14px; }
   .short { background:#0a1526; border:1px solid var(--borde); border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:8px; }
   .short.descartado { opacity:.45; } .short.aprobado { border-color:var(--ok); }
   .short video, .short .hueco { width:100%; aspect-ratio:9/16; border-radius:8px; background:#060d18; }
-  .short .hueco { display:flex; align-items:center; justify-content:center; color:var(--suave); cursor:pointer; border:1px dashed var(--borde); font-size:15px; }
+  .short .hueco, .hueco-img { display:flex; align-items:center; justify-content:center; color:var(--suave); cursor:pointer; border:1px dashed var(--borde); font-size:15px; }
+  .hueco-img { width:100%; aspect-ratio:1; border-radius:8px; background:#060d18; text-align:center; padding:8px; }
+  .short img { width:100%; border-radius:8px; }
   .short b { color:var(--crema); } .short small { color:var(--suave); }
   .short .txt { font-size:13px; color:var(--suave); white-space:pre-wrap; }
-  .mini { display:flex; gap:6px; flex-wrap:wrap; } .mini button { font-size:13px; padding:5px 10px; }
+  .mini { display:flex; gap:6px; flex-wrap:wrap; } .mini button, .mini select { font-size:13px; padding:5px 10px; width:auto; }
   details summary { cursor:pointer; color:var(--azul); margin-top:12px; }
   #aviso { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:#06121f; border:1px solid var(--azul); padding:10px 18px; border-radius:10px; display:none; max-width:90vw; z-index:9; }
   ol.cola { padding-left:22px; } ol.cola li { margin-bottom:8px; }
+  ul.fich { list-style:none; padding:0; margin:6px 0; } ul.fich li { display:flex; gap:10px; align-items:center; padding:5px 0; border-bottom:1px solid var(--borde); font-size:14px; flex-wrap:wrap; } ul.fich li span { flex:1; word-break:break-all; }
+  ul.fich button { font-size:12px; padding:3px 9px; }
+  .opc { display:flex; gap:18px; flex-wrap:wrap; margin:8px 0; } .opc label { margin:0; font-size:15px; color:var(--texto); cursor:pointer; }
+  #qr { background:#fff; padding:14px; border-radius:10px; display:inline-block; margin-top:10px; } #qr img { display:block; }
   a { color:var(--azul); }
 </style>
 </head>
@@ -50,106 +61,161 @@
 <header><h1>HIDDEN TRIO</h1><span>Panel de shorts</span></header>
 <nav id="nav" hidden>
   <button data-v="canciones" class="activa">Canciones</button>
+  <button data-v="recursos">Recursos e IA</button>
   <button data-v="cola">Cola de publicación</button>
   <button data-v="conexiones">Conexiones</button>
+  <button data-v="dispositivos">Otros dispositivos</button>
 </nav>
 <main id="main"></main>
 <div id="aviso"></div>
 <script src="config.js"></script>
+<script src="qrcode.js"></script>
 <script>
 const C = window.CONFIG, API = `https://api.github.com/repos/${C.repo}`;
 const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const h = (t) => String(t ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 let clave = localStorage.getItem('ht-clave') || '';
-let vista = 'canciones', arbol = [], canciones = [], conexiones = {};
-
-// La clave puede venir en el enlace (#clave=...): se guarda en este navegador y se quita de la barra.
-const m = location.hash.match(/clave=([^&]+)/);
-if (m) { clave = decodeURIComponent(m[1]); localStorage.setItem('ht-clave', clave); history.replaceState(null, '', location.pathname); }
+let vista = 'canciones', arbol = [], canciones = [], generaciones = [], conexiones = {};
+const MAX_MB = 45;
 
 function aviso(t, ms = 3500) { const a = $('#aviso'); a.textContent = t; a.style.display = 'block'; clearTimeout(aviso.t); aviso.t = setTimeout(() => a.style.display = 'none', ms); }
-const b64 = (bytes) => { let s = ''; new Uint8Array(bytes).forEach((b) => s += String.fromCharCode(b)); return btoa(s); };
-const deB64 = (s) => Uint8Array.from(atob(s.replace(/\s/g, '')), (c) => c.charCodeAt(0));
+const b64 = (bytes) => { const u = new Uint8Array(bytes); let s = ''; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); };
+const deB64 = (s) => Uint8Array.from(atob(s.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0));
 const aTexto = (s) => new TextDecoder().decode(deB64(s));
 const deTexto = (t) => b64(new TextEncoder().encode(t));
+const slug = (t) => t.toLowerCase().normalize('NFD').replace(/[^a-z0-9.]+/g, '-').replace(/^-|-$/g, '');
+const esImagen = (p) => /\.(png|jpe?g|webp)$/i.test(p);
+const ahora = () => new Date().toISOString();
 
 async function gh(ruta, opc = {}) {
   const r = await fetch(API + ruta, { ...opc, cache: 'no-store', headers: { Authorization: `Bearer ${clave}`, Accept: 'application/vnd.github+json', ...(opc.headers || {}) } });
   if (r.status === 401 || r.status === 403) { const e = new Error('clave'); e.clave = true; throw e; }
   return r;
 }
-async function leer(ruta) { // -> { texto, sha } o null
+async function leer(ruta) {
   const r = await gh(`/contents/${encodeURI(ruta)}?ref=${C.rama}`);
   if (r.status === 404) return null;
   const j = await r.json();
   return { texto: aTexto(j.content), sha: j.sha };
 }
-async function escribir(ruta, texto, mensaje) {
-  const previo = await gh(`/contents/${encodeURI(ruta)}?ref=${C.rama}`);
-  const sha = previo.ok ? (await previo.json()).sha : undefined;
-  const r = await gh(`/contents/${encodeURI(ruta)}`, { method: 'PUT', body: JSON.stringify({ message: mensaje, content: deTexto(texto), sha, branch: C.rama }) });
-  if (!r.ok) throw new Error(`No se pudo guardar (${r.status})`);
+async function escribirB64(ruta, contenido, mensaje) {
+  const previo = arbol.find((f) => f.path === ruta);
+  let sha = previo?.sha;
+  for (let i = 0; i < 2; i++) {
+    const r = await gh(`/contents/${encodeURI(ruta)}`, { method: 'PUT', body: JSON.stringify({ message: mensaje, content: contenido, sha, branch: C.rama }) });
+    if (r.ok) return;
+    if (r.status !== 409 && r.status !== 422) throw new Error(`No se pudo guardar (${r.status})`);
+    const p = await gh(`/contents/${encodeURI(ruta)}?ref=${C.rama}`); sha = p.ok ? (await p.json()).sha : undefined;
+  }
+  throw new Error('No se pudo guardar: alguien lo cambió a la vez. Prueba otra vez.');
+}
+const escribir = (ruta, texto, mensaje) => escribirB64(ruta, deTexto(texto), mensaje);
+async function subirFichero(ruta, file) {
+  if (file.size > MAX_MB * 1048576) throw new Error(`«${file.name}» pesa más de ${MAX_MB} MB. Si es un audio, súbelo en mp3.`);
+  await escribirB64(ruta, b64(await file.arrayBuffer()), `sube ${ruta}`);
+}
+async function borrar(ruta) {
+  const f = arbol.find((x) => x.path === ruta); if (!f) return;
+  const r = await gh(`/contents/${encodeURI(ruta)}`, { method: 'DELETE', body: JSON.stringify({ message: `borra ${ruta}`, sha: f.sha, branch: C.rama }) });
+  if (!r.ok) throw new Error(`No se pudo borrar (${r.status})`);
 }
 const json = async (ruta) => { const x = await leer(ruta); try { return x ? JSON.parse(x.texto) : null; } catch { return null; } };
+const urls = {};
+async function urlDe(ruta) { // fichero del repo como URL local (para verlo o descargarlo)
+  const f = arbol.find((x) => x.path === ruta);
+  if (!f) throw new Error('Ese fichero todavía no está subido.');
+  if (urls[f.sha]) return urls[f.sha];
+  const r = await gh(`/git/blobs/${f.sha}`, { headers: { Accept: 'application/vnd.github.raw' } });
+  const tipo = /\.mp4$/i.test(ruta) ? 'video/mp4' : /\.png$/i.test(ruta) ? 'image/png' : /\.jpe?g$/i.test(ruta) ? 'image/jpeg' : /\.webp$/i.test(ruta) ? 'image/webp' : /\.mp3$/i.test(ruta) ? 'audio/mpeg' : 'application/octet-stream';
+  return urls[f.sha] = URL.createObjectURL(new Blob([await r.arrayBuffer()], { type: tipo }));
+}
+async function descargar(ruta, nombre) { const a = document.createElement('a'); a.href = await urlDe(ruta); a.download = nombre || ruta.split('/').pop(); a.click(); }
+function pintarImagenes(raiz = document) { // <img data-src="ruta del repo"> se cargan solas
+  $$('img[data-src]', raiz).forEach(async (img) => { const r = img.dataset.src; img.removeAttribute('data-src'); try { img.src = await urlDe(r); } catch { img.alt = 'sin imagen'; } });
+}
 
 async function cargar() {
   const r = await gh(`/git/trees/${C.rama}?recursive=1`);
   if (!r.ok) throw new Error(`No se pudo leer el panel (${r.status})`);
-  arbol = (await r.json()).tree;
+  arbol = (await r.json()).tree.filter((f) => f.type === 'blob');
   const ids = [...new Set(arbol.map((f) => (f.path.match(/^canciones\/([^/]+)\/cancion\.json$/) || [])[1]).filter(Boolean))];
   canciones = await Promise.all(ids.map(async (id) => {
     const [c, res, dec, letra] = await Promise.all([json(`canciones/${id}/cancion.json`), json(`canciones/${id}/resultado.json`), json(`canciones/${id}/decisiones.json`), leer(`canciones/${id}/letra.txt`)]);
     return { id, ...c, res: res || {}, dec: dec || {}, letra: letra ? letra.texto : '' };
   }));
   canciones.sort((a, b) => (b.creado || '').localeCompare(a.creado || ''));
+  const gids = [...new Set(arbol.map((f) => (f.path.match(/^generaciones\/([^/]+)\/pedido\.json$/) || [])[1]).filter(Boolean))];
+  generaciones = await Promise.all(gids.map(async (id) => ({ id, ...(await json(`generaciones/${id}/pedido.json`)), res: (await json(`generaciones/${id}/resultado.json`)) || {} })));
+  generaciones.sort((a, b) => (b.creado || '').localeCompare(a.creado || ''));
   conexiones = {};
   for (const f of arbol) { const k = (f.path.match(/^conexiones\/(\w+)\.json$/) || [])[1]; if (k) conexiones[k] = true; }
 }
+const ficherosDe = (prefijo) => arbol.filter((f) => f.path.startsWith(prefijo)).map((f) => f.path);
+const imagenesDisponibles = () => [...ficherosDe('recursos/'), ...canciones.flatMap((c) => ficherosDe(`canciones/${c.id}/recursos/`)), ...generaciones.filter((g) => g.res.imagen).map((g) => g.res.imagen)].filter(esImagen);
 
 function estadoDe(c) {
   if (c.res.pedido_id !== c.pedido?.id) return c.res.estado === 'generando' && c.res.generando_id === c.pedido?.id ? ['Generando…', 'espera'] : ['En cola', 'espera'];
   if (c.res.estado === 'error') return ['Falló', 'mal'];
   return [`${(c.res.shorts || []).length} shorts listos`, 'ok'];
 }
+const TIPOS = { subida: 'Subida al estribillo', drop: 'Drop', energia: 'Momento más fuerte', puente: 'Puente' };
+const tipo = (t) => TIPOS[t] || t.replace(/^estribillo(\d+)$/, 'Estribillo $1');
 
 function pintar() {
   $('#nav').hidden = false;
-  document.querySelectorAll('nav button').forEach((b) => b.classList.toggle('activa', b.dataset.v === vista));
-  ({ canciones: pintarCanciones, cola: pintarCola, conexiones: pintarConexiones })[vista]();
+  $$('nav button').forEach((b) => b.classList.toggle('activa', b.dataset.v === vista));
+  ({ canciones: pintarCanciones, recursos: pintarRecursos, cola: pintarCola, conexiones: pintarConexiones, dispositivos: pintarDispositivos })[vista]();
+  pintarImagenes();
 }
 
-function pintarEntrada(error) {
+function pintarEntrada(mensaje) {
   $('#nav').hidden = true;
   $('#main').innerHTML = `<div class="caja" style="max-width:520px;margin:40px auto">
-    <h2>Entrar</h2><p class="nota">${error ? 'Esa clave no vale o ha caducado. ' : ''}Pega la clave del panel que te ha pasado Lucas. Se guarda solo en este navegador.</p>
-    <input id="k" type="password" placeholder="Clave del panel" autocomplete="off">
-    <div class="botones"><button class="b" id="entrar">Entrar</button></div></div>`;
-  $('#entrar').onclick = () => { clave = $('#k').value.trim(); localStorage.setItem('ht-clave', clave); arrancar(); };
+    <h2>Entrar</h2><p class="nota">${h(mensaje || 'Para entrar hace falta un enlace de acceso. Pídeselo a Lucas, o si ya tienes el panel abierto en otro dispositivo, ve allí a «Otros dispositivos» y escanea el código.')}</p></div>`;
+}
+
+const listaFicheros = (rutas, borrable = true) => rutas.length ? `<ul class="fich">${rutas.map((r) => `<li><span>${h(r.split('/').pop())}</span><button class="b sec" data-bajar-r="${h(r)}">Descargar</button>${borrable ? `<button class="b mal" data-borrar-r="${h(r)}">Borrar</button>` : ''}</li>`).join('')}</ul>` : '<p class="nota">Nada subido todavía.</p>';
+function engancharFicheros(raiz) {
+  $$('[data-bajar-r]', raiz).forEach((b) => b.onclick = (e) => conBoton(e.target, () => descargar(b.dataset.bajarR)));
+  $$('[data-borrar-r]', raiz).forEach((b) => b.onclick = (e) => conBoton(e.target, async () => { if (!confirm('¿Borrar este fichero?')) return; await borrar(b.dataset.borrarR); await recargar(); }));
 }
 
 function pintarCanciones() {
+  const imgs = imagenesDisponibles();
   $('#main').innerHTML = `
   <div class="caja">
     <h2>Nueva canción</h2>
-    <p class="nota">Sube el vídeo del disco girando a YouTube, pega aquí el enlace y la letra, y los shorts se hacen solos. Tardan entre unos minutos y una hora en aparecer (los monta el ordenador de Lucas en su siguiente pasada).</p>
+    <p class="nota">Rellena lo que tengas y añádela a la cola: los shorts se hacen solos. Tardan entre unos minutos y una hora en aparecer (los monta el ordenador de Lucas).</p>
     <div class="fila"><div><label>Título de la canción</label><input id="n-titulo" placeholder="Leave the Light On"></div>
       <div><label>Disco (opcional)</label><input id="n-disco" placeholder="Nombre del disco"></div></div>
-    <label>Enlace del vídeo en YouTube</label><input id="n-yt" placeholder="https://www.youtube.com/watch?v=...">
-    <label>Letra (un verso por línea; sirve para que los subtítulos salgan sin erratas)</label><textarea id="n-letra" placeholder="Leave the light on&#10;I wanna see you dance&#10;..."></textarea>
-    <div class="fila"><div><label>Cuántos shorts</label><select id="n-n"><option>3</option><option>4</option><option selected>5</option><option>6</option></select></div>
+    <h4>1 · El vídeo</h4>
+    <div class="opc"><label><input type="radio" name="n-origen" value="yt" checked>Ya está en YouTube</label><label><input type="radio" name="n-origen" value="audio">Todavía no: subo el audio y la carátula y que se monte el vídeo del disco girando</label></div>
+    <div id="n-yt-caja"><label>Enlace del vídeo en YouTube</label><input id="n-yt" placeholder="https://www.youtube.com/watch?v=..."></div>
+    <div id="n-audio-caja" hidden>
+      <label>Audio de la canción (mp3, o wav de menos de ${MAX_MB} MB)</label><input id="n-audio" type="file" accept=".mp3,.wav,.m4a,audio/*">
+      <label>Carátula (imagen cuadrada)</label><input id="n-car" type="file" accept="image/*">
+      ${imgs.length ? `<label>…o una imagen que ya está en el panel</label><select id="n-car-ya"><option value="">(ninguna)</option>${imgs.map((r) => `<option value="${h(r)}">${h(r)}</option>`).join('')}</select>` : ''}
+      <p class="nota">¿No tienes carátula? Créala en «Recursos e IA» y luego elígela aquí.</p>
+    </div>
+    <h4>2 · La letra</h4>
+    <textarea id="n-letra" placeholder="Un verso por línea. Sirve para que los subtítulos salgan sin erratas.&#10;&#10;Leave the light on&#10;I wanna see you dance&#10;..."></textarea>
+    <h4>3 · Los shorts</h4>
+    <div class="fila"><div><label>Cuántos</label><select id="n-n"><option>3</option><option>4</option><option selected>5</option><option>6</option></select></div>
       <div><label>Duración de cada uno</label><select id="n-dur"><option value="20">20 s</option><option value="30" selected>30 s</option><option value="45">45 s</option></select></div></div>
-    <div class="botones"><button class="b" id="n-ok">Añadir a la cola</button></div>
+    <div class="botones"><button class="b" id="n-ok">Añadir a la cola</button><small class="nota" id="n-prog"></small></div>
   </div>
   ${canciones.length ? '' : '<p class="nota">Todavía no hay canciones.</p>'}
-  ${canciones.map((c) => { const [t, cls] = estadoDe(c); return `
+  ${canciones.map((c) => { const [t, cls] = estadoDe(c); const rec = ficherosDe(`canciones/${c.id}/recursos/`); return `
   <div class="caja" data-id="${h(c.id)}">
-    <div class="cab"><div><h3 style="margin:0">${h(c.titulo)}</h3><small class="nota">${c.disco ? h(c.disco) + ' · ' : ''}<a href="${h(c.youtube)}" target="_blank" rel="noopener">vídeo en YouTube</a></small></div>
+    <div class="cab"><div class="izq">${c.caratula ? `<img class="car" data-src="${h(c.caratula)}" alt="">` : ''}<div><h3 style="margin:0">${h(c.titulo)}</h3><small class="nota">${c.disco ? h(c.disco) + ' · ' : ''}${c.youtube ? `<a href="${h(c.youtube)}" target="_blank" rel="noopener">vídeo en YouTube</a>` : 'vídeo montado aquí con el audio y la carátula'}</small></div></div>
       <span class="estado e-${cls}">${t}</span></div>
     ${c.res.estado === 'error' && c.res.pedido_id === c.pedido?.id ? `<p class="nota" style="color:var(--mal)">${h(c.res.error)}</p>` : ''}
+    ${c.res.video ? `<div class="botones"><button class="b sec" data-video>Descargar el vídeo completo (para subirlo a YouTube)</button></div>` : ''}
     <div class="shorts">${(c.res.shorts || []).map((s) => { const d = c.dec[s.fichero]?.estado || 'nuevo'; return `
       <div class="short ${d}" data-f="${h(s.fichero)}">
         <div class="hueco" data-ver>▶ Ver</div>
-        <div><b>${h(s.titulo || s.tipo)}</b><br><small>${h(tipo(s.tipo))} · del ${s.desde} al ${s.hasta} s</small></div>
+        <div><b>${h(s.titulo || tipo(s.tipo))}</b><br><small>${h(tipo(s.tipo))} · del ${s.desde} al ${s.hasta} s</small></div>
         <div class="txt">${h([s.descripcion, s.hashtags].filter(Boolean).join('\n\n') || s.letra)}</div>
         <div class="mini">
           <button class="b ${d === 'aprobado' ? '' : 'sec'}" data-dec="aprobado">${d === 'aprobado' ? '✓ Aprobado' : 'Aprobar'}</button>
@@ -158,54 +224,116 @@ function pintarCanciones() {
           <button class="b sec" data-bajar>Descargar</button>
         </div>
       </div>`; }).join('')}</div>
-    <details><summary>Letra y volver a generar</summary>
+    <details><summary>Letra, carátula, ficheros y volver a generar</summary>
       <label>Letra</label><textarea data-letra>${h(c.letra)}</textarea>
+      <label>Carátula de esta canción</label>
+      <select data-car><option value="">(sin carátula)</option>${[...new Set([c.caratula, ...imgs].filter(Boolean))].map((r) => `<option value="${h(r)}" ${r === c.caratula ? 'selected' : ''}>${h(r)}</option>`).join('')}</select>
+      <label>Ficheros de esta canción (audio, carátulas, fotos, lo que sea)</label>
+      ${listaFicheros(rec)}
+      <input type="file" data-subir multiple>
       <div class="fila"><div><label>Cuántos shorts</label><select data-n>${[3, 4, 5, 6].map((n) => `<option ${n === (c.pedido?.n || 5) ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
         <div><label>Duración</label><select data-dur>${[20, 30, 45].map((n) => `<option value="${n}" ${n === (c.pedido?.dur || 30) ? 'selected' : ''}>${n} s</option>`).join('')}</select></div></div>
-      <div class="botones"><button class="b sec" data-letra-ok>Guardar la letra</button><button class="b" data-regen>Guardar y generar de nuevo</button></div>
+      <div class="botones"><button class="b sec" data-guardar-c>Guardar cambios</button><button class="b" data-regen>Guardar y generar de nuevo</button></div>
       <p class="nota">Al generar de nuevo se sustituyen los shorts de esta canción y se borran los aprobados.</p>
     </details>
   </div>`; }).join('')}`;
 
+  $$('[name=n-origen]').forEach((r) => r.onchange = () => { const a = $('[name=n-origen]:checked').value === 'audio'; $('#n-audio-caja').hidden = !a; $('#n-yt-caja').hidden = a; });
   $('#n-ok').onclick = (e) => conBoton(e.target, async () => {
-    const titulo = $('#n-titulo').value.trim(), yt = $('#n-yt').value.trim();
-    if (!titulo || !/^https?:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)\//.test(yt)) return aviso('Falta el título o el enlace de YouTube.');
-    let id = titulo.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'cancion';
+    const titulo = $('#n-titulo').value.trim(), origen = $('[name=n-origen]:checked').value, yt = $('#n-yt').value.trim();
+    const audio = $('#n-audio').files[0], car = $('#n-car').files[0], carYa = $('#n-car-ya')?.value || '';
+    if (!titulo) return aviso('Falta el título.');
+    if (origen === 'yt' && !/^https?:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)\//.test(yt)) return aviso('Falta el enlace de YouTube.');
+    if (origen === 'audio' && (!audio || !(car || carYa))) return aviso('Faltan el audio y la carátula.');
+    let id = slug(titulo) || 'cancion';
     if (canciones.some((c) => c.id === id)) id += '-' + Date.now().toString(36);
-    const ahora = new Date().toISOString();
+    const prog = (t) => $('#n-prog').textContent = t;
+    const c = { titulo, disco: $('#n-disco').value.trim(), creado: ahora() };
+    if (origen === 'yt') c.youtube = yt;
+    else {
+      prog('Subiendo el audio…'); c.audio = `canciones/${id}/recursos/${slug(audio.name)}`; await subirFichero(c.audio, audio);
+      if (car) { prog('Subiendo la carátula…'); c.caratula = `canciones/${id}/recursos/${slug(car.name)}`; await subirFichero(c.caratula, car); } else c.caratula = carYa;
+    }
+    prog('Guardando…');
     if ($('#n-letra').value.trim()) await escribir(`canciones/${id}/letra.txt`, $('#n-letra').value.trim() + '\n', `letra de ${titulo}`);
-    await escribir(`canciones/${id}/cancion.json`, JSON.stringify({ titulo, disco: $('#n-disco').value.trim(), youtube: yt, creado: ahora, pedido: { id: ahora, n: +$('#n-n').value, dur: +$('#n-dur').value } }, null, 1), `nueva canción: ${titulo}`);
+    c.pedido = { id: ahora(), n: +$('#n-n').value, dur: +$('#n-dur').value };
+    await escribir(`canciones/${id}/cancion.json`, JSON.stringify(c, null, 1), `nueva canción: ${titulo}`);
     aviso('Añadida a la cola.'); await recargar();
   });
 
-  document.querySelectorAll('.caja[data-id]').forEach((caja) => {
+  $$('.caja[data-id]').forEach((caja) => {
     const c = canciones.find((x) => x.id === caja.dataset.id);
-    const guardarLetra = () => escribir(`canciones/${c.id}/letra.txt`, $('[data-letra]', caja).value.trim() + '\n', `letra de ${c.titulo}`);
-    $('[data-letra-ok]', caja).onclick = (e) => conBoton(e.target, async () => { await guardarLetra(); aviso('Letra guardada. Se usará la próxima vez que se generen.'); });
-    $('[data-regen]', caja).onclick = (e) => conBoton(e.target, async () => {
-      await guardarLetra();
+    engancharFicheros(caja);
+    const guardar = async (nuevoPedido) => {
+      await escribir(`canciones/${c.id}/letra.txt`, $('[data-letra]', caja).value.trim() + '\n', `letra de ${c.titulo}`);
       const { id, res, dec, letra, ...resto } = c;
-      await escribir(`canciones/${c.id}/cancion.json`, JSON.stringify({ ...resto, pedido: { id: new Date().toISOString(), n: +$('[data-n]', caja).value, dur: +$('[data-dur]', caja).value } }, null, 1), `generar de nuevo: ${c.titulo}`);
-      await escribir(`canciones/${c.id}/decisiones.json`, '{}', `decisiones a cero: ${c.titulo}`);
-      aviso('En cola para generarse de nuevo.'); await recargar();
-    });
-    caja.querySelectorAll('.short').forEach((el) => {
-      const s = c.res.shorts.find((x) => x.fichero === el.dataset.f);
-      const video = async () => {
-        const f = arbol.find((x) => x.path === `canciones/${c.id}/shorts/${s.fichero}`);
-        if (!f) throw new Error('El vídeo todavía no está subido.');
-        const r = await gh(`/git/blobs/${f.sha}`, { headers: { Accept: 'application/vnd.github.raw' } });
-        return URL.createObjectURL(new Blob([await r.arrayBuffer()], { type: 'video/mp4' }));
-      };
-      $('[data-ver]', el).onclick = async (e) => { e.target.textContent = 'Cargando…'; try { const v = document.createElement('video'); v.src = await video(); v.controls = true; v.autoplay = true; e.target.replaceWith(v); } catch (x) { fallo(x); e.target.textContent = '▶ Ver'; } };
-      $('[data-bajar]', el).onclick = (e) => conBoton(e.target, async () => { const a = document.createElement('a'); a.href = await video(); a.download = `${c.id}-${s.fichero}`; a.click(); });
+      resto.caratula = $('[data-car]', caja).value || undefined;
+      if (nuevoPedido) resto.pedido = { id: ahora(), n: +$('[data-n]', caja).value, dur: +$('[data-dur]', caja).value };
+      await escribir(`canciones/${c.id}/cancion.json`, JSON.stringify(resto, null, 1), `${nuevoPedido ? 'generar de nuevo' : 'cambios'}: ${c.titulo}`);
+      if (nuevoPedido) await escribir(`canciones/${c.id}/decisiones.json`, '{}', `decisiones a cero: ${c.titulo}`);
+    };
+    $('[data-guardar-c]', caja).onclick = (e) => conBoton(e.target, async () => { await guardar(false); aviso('Guardado. Se usará la próxima vez que se generen.'); await recargar(); });
+    $('[data-regen]', caja).onclick = (e) => conBoton(e.target, async () => { await guardar(true); aviso('En cola para generarse de nuevo.'); await recargar(); });
+    $('[data-subir]', caja).onchange = (e) => conBoton(e.target, async () => { for (const f of e.target.files) { aviso(`Subiendo ${f.name}…`, 60000); await subirFichero(`canciones/${c.id}/recursos/${slug(f.name)}`, f); } aviso('Subido.'); await recargar(); });
+    const bv = $('[data-video]', caja); if (bv) bv.onclick = (e) => conBoton(e.target, () => descargar(c.res.video, `${c.id}.mp4`));
+    $$('.short', caja).forEach((el) => {
+      const s = c.res.shorts.find((x) => x.fichero === el.dataset.f), ruta = `canciones/${c.id}/shorts/${s.fichero}`;
+      $('[data-ver]', el).onclick = async (e) => { e.target.textContent = 'Cargando…'; try { const v = document.createElement('video'); v.src = await urlDe(ruta); v.controls = true; v.autoplay = true; e.target.replaceWith(v); } catch (x) { fallo(x); e.target.textContent = '▶ Ver'; } };
+      $('[data-bajar]', el).onclick = (e) => conBoton(e.target, () => descargar(ruta, `${c.id}-${s.fichero}`));
       $('[data-copiar]', el).onclick = () => navigator.clipboard.writeText([s.titulo, s.descripcion, s.hashtags].filter(Boolean).join('\n\n') || s.letra).then(() => aviso('Texto copiado.'));
-      el.querySelectorAll('[data-dec]').forEach((b) => b.onclick = (e) => conBoton(e.target, async () => {
-        const actual = c.dec[s.fichero]?.estado;
-        if (actual === b.dataset.dec) delete c.dec[s.fichero]; else c.dec[s.fichero] = { estado: b.dataset.dec, cuando: new Date().toISOString() };
+      $$('[data-dec]', el).forEach((b) => b.onclick = (e) => conBoton(e.target, async () => {
+        if (c.dec[s.fichero]?.estado === b.dataset.dec) delete c.dec[s.fichero]; else c.dec[s.fichero] = { estado: b.dataset.dec, cuando: ahora() };
         await escribir(`canciones/${c.id}/decisiones.json`, JSON.stringify(c.dec, null, 1), `${b.dataset.dec}: ${c.titulo} ${s.fichero}`);
-        pintar();
+        await recargar();
       }));
+    });
+  });
+}
+
+function pintarRecursos() {
+  const generales = ficherosDe('recursos/'), imgs = imagenesDisponibles();
+  $('#main').innerHTML = `
+  <div class="caja"><h2>Crear una imagen con IA</h2>
+    <p class="nota">Carátulas, fondos, fotos de Timber… Describe lo que quieres y, si te sirve, marca imágenes de referencia de las que ya están subidas. Se crean con el ChatGPT de Lucas y aparecen aquí abajo (entre unos minutos y una hora).</p>
+    <label>Qué quieres</label><textarea id="g-texto" style="min-height:90px" placeholder="Carátula de disco: Timber sentado en un muelle al atardecer, la pareja de espaldas al fondo, tonos azules. Sin texto."></textarea>
+    <div class="fila"><div><label>Formato</label><select id="g-formato"><option value="cuadrado">Cuadrado (carátula)</option><option value="vertical">Vertical (short)</option><option value="horizontal">Horizontal (YouTube)</option></select></div>
+      <div><label>¿Es la carátula de una canción? (opcional)</label><select id="g-cancion"><option value="">No</option>${canciones.map((c) => `<option value="${h(c.id)}">${h(c.titulo)}</option>`).join('')}</select></div></div>
+    ${imgs.length ? `<label>Imágenes de referencia (hasta 4)</label><div class="opc">${imgs.map((r) => `<label><input type="checkbox" data-ref value="${h(r)}">${h(r.split('/').pop())}</label>`).join('')}</div>` : ''}
+    <div class="botones"><button class="b" id="g-ok">Pedir la imagen</button></div>
+  </div>
+  <div class="caja"><h2>Imágenes creadas</h2>
+    ${generaciones.length ? `<div class="galeria">${generaciones.map((g) => `<div class="short" data-g="${h(g.id)}">
+      ${g.res.imagen ? `<img data-src="${h(g.res.imagen)}" alt="">` : `<div class="hueco-img">${g.res.estado === 'error' ? 'Falló: ' + h(g.res.error) : 'En cola…'}</div>`}
+      <div class="txt">${h(g.texto)}</div>
+      ${g.res.imagen ? `<div class="mini"><button class="b sec" data-bajar-r="${h(g.res.imagen)}">Descargar</button>
+        <select data-usar><option value="">Usar de carátula en…</option>${canciones.map((c) => `<option value="${h(c.id)}">${h(c.titulo)}</option>`).join('')}</select></div>` : ''}
+      <div class="mini"><button class="b sec" data-repetir>Otra versión</button></div></div>`).join('')}</div>` : '<p class="nota">Todavía no has pedido ninguna.</p>'}
+  </div>
+  <div class="caja"><h2>Recursos del grupo</h2>
+    <p class="nota">Lo que vale para todas las canciones: el logo, fotos de Timber, la carátula de un disco, plantillas. Lo de una canción concreta se sube en su ficha, en «Canciones».</p>
+    ${listaFicheros(generales)}
+    <label>Subir ficheros</label><input type="file" id="r-subir" multiple>
+  </div>`;
+  engancharFicheros($('#main'));
+  const pedir = async (texto, formato, cancion, referencias) => {
+    const id = Date.now().toString(36);
+    await escribir(`generaciones/${id}/pedido.json`, JSON.stringify({ texto, formato, cancion, referencias, creado: ahora() }, null, 1), 'pedido de imagen');
+    aviso('Pedida. Aparecerá aquí cuando esté.'); await recargar();
+  };
+  $('#g-ok').onclick = (e) => conBoton(e.target, async () => {
+    const texto = $('#g-texto').value.trim(); if (!texto) return aviso('Describe qué quieres.');
+    const refs = $$('[data-ref]:checked').map((x) => x.value); if (refs.length > 4) return aviso('Como mucho 4 imágenes de referencia.');
+    await pedir(texto, $('#g-formato').value, $('#g-cancion').value || undefined, refs);
+  });
+  $('#r-subir').onchange = (e) => conBoton(e.target, async () => { for (const f of e.target.files) { aviso(`Subiendo ${f.name}…`, 60000); await subirFichero(`recursos/${slug(f.name)}`, f); } aviso('Subido.'); await recargar(); });
+  $$('[data-g]').forEach((el) => {
+    const g = generaciones.find((x) => x.id === el.dataset.g);
+    $('[data-repetir]', el).onclick = (e) => conBoton(e.target, () => pedir(g.texto, g.formato, g.cancion, g.referencias || []));
+    const u = $('[data-usar]', el); if (u) u.onchange = () => conBoton(u, async () => {
+      const c = canciones.find((x) => x.id === u.value); if (!c) return;
+      const { id, res, dec, letra, ...resto } = c; resto.caratula = g.res.imagen;
+      await escribir(`canciones/${c.id}/cancion.json`, JSON.stringify(resto, null, 1), `carátula de ${c.titulo}`);
+      aviso(`Puesta de carátula en «${c.titulo}». Para rehacer sus shorts, «generar de nuevo» en su ficha.`, 6000); await recargar();
     });
   });
 }
@@ -215,11 +343,9 @@ function pintarCola() {
   const hay = ['youtube', 'tiktok', 'instagram'].filter((k) => conexiones[k]);
   $('#main').innerHTML = `<div class="caja"><h2>Cola de publicación</h2>
     <p class="nota">Los shorts que apruebas en «Canciones» se ponen aquí, por orden de aprobación. ${hay.length ? `Cuentas con acceso guardado: ${hay.join(', ')}.` : 'Todavía no hay ninguna cuenta conectada (pestaña «Conexiones»).'} La publicación automática aún no está encendida: de momento, descárgalos y súbelos a mano con su texto.</p>
-    ${cola.length ? `<ol class="cola">${cola.map((x) => `<li><b>${h(x.c.titulo)}</b> · ${h(x.s.titulo || x.s.tipo)} <small class="nota">(${h(x.s.fichero)}, aprobado el ${new Date(x.cuando).toLocaleDateString('es')})</small></li>`).join('')}</ol>` : '<p class="nota">No hay ninguno aprobado.</p>'}</div>`;
+    ${cola.length ? `<ol class="cola">${cola.map((x) => `<li><b>${h(x.c.titulo)}</b> · ${h(x.s.titulo || tipo(x.s.tipo))} <small class="nota">(${h(x.s.fichero)}, aprobado el ${new Date(x.cuando).toLocaleDateString('es')})</small></li>`).join('')}</ol>` : '<p class="nota">No hay ninguno aprobado.</p>'}</div>`;
 }
 
-const TIPOS = { subida: 'Subida al estribillo', drop: 'Drop', energia: 'Momento más fuerte', puente: 'Puente' };
-const tipo = (t) => TIPOS[t] || t.replace(/^estribillo(\d+)$/, 'Estribillo $1');
 const REDES = [
   ['youtube', 'YouTube', 'El canal de Hidden Trio. Hace falta que el dueño del canal dé permiso a la aplicación de subida; se hace una vez con Lucas en una llamada. Si ya tienes los datos (client id, client secret y refresh token), pégalos aquí.'],
   ['tiktok', 'TikTok', 'La cuenta de TikTok del grupo. Apunta aquí el usuario y, si ya existen, los datos de acceso de la aplicación de publicación.'],
@@ -231,12 +357,25 @@ function pintarConexiones() {
     ${REDES.map(([k, nombre, ayuda]) => `<div class="caja"><div class="cab"><h3 style="margin:0">${nombre}</h3><span class="estado e-${conexiones[k] ? 'ok' : 'gris'}">${conexiones[k] ? 'Acceso guardado' : 'Sin conectar'}</span></div>
       <p class="nota">${ayuda}</p><textarea data-red="${k}" style="min-height:90px" placeholder="Usuario, claves o lo que te hayan dado para ${nombre}" autocomplete="off"></textarea>
       <div class="botones"><button class="b" data-guardar="${k}">Guardar cifrado</button></div></div>`).join('')}`;
-  document.querySelectorAll('[data-guardar]').forEach((b) => b.onclick = (e) => conBoton(e.target, async () => {
+  $$('[data-guardar]').forEach((b) => b.onclick = (e) => conBoton(e.target, async () => {
     const k = b.dataset.guardar, texto = $(`[data-red="${k}"]`).value.trim();
     if (!texto) return aviso('Está vacío.');
-    await escribir(`conexiones/${k}.json`, JSON.stringify({ ...(await cifrar(texto)), cuando: new Date().toISOString() }, null, 1), `acceso de ${k}`);
+    await escribir(`conexiones/${k}.json`, JSON.stringify({ ...(await cifrar(texto)), cuando: ahora() }, null, 1), `acceso de ${k}`);
     aviso('Guardado y cifrado.'); await recargar();
   }));
+}
+
+function pintarDispositivos() {
+  $('#main').innerHTML = `<div class="caja"><h2>Abrir el panel en otro dispositivo</h2>
+    <p class="nota">Escanea este código con la cámara del móvil o la tablet (o copia el enlace) y el panel se abre ya dentro. El código es tu llave: no lo mandes a nadie ni lo publiques; quien lo tenga entra como tú.</p>
+    <div class="botones"><button class="b" id="d-ver">Mostrar el código</button><button class="b sec" id="d-copiar">Copiar el enlace</button></div>
+    <div id="d-qr"></div></div>
+    <div class="caja"><h3>Salir de este dispositivo</h3><p class="nota">Borra la llave de este navegador. Para volver a entrar hará falta escanear el código desde otro dispositivo o pedirle un enlace nuevo a Lucas.</p>
+    <div class="botones"><button class="b mal" id="d-salir">Salir</button></div></div>`;
+  const enlace = () => `${location.origin}${location.pathname}#clave=${encodeURIComponent(clave)}`;
+  $('#d-ver').onclick = () => { const q = qrcode(0, 'M'); q.addData(enlace()); q.make(); $('#d-qr').innerHTML = `<div id="qr">${q.createImgTag(5, 0)}</div>`; };
+  $('#d-copiar').onclick = () => navigator.clipboard.writeText(enlace()).then(() => aviso('Enlace copiado. No lo compartas.'));
+  $('#d-salir').onclick = () => { if (!confirm('¿Salir de este dispositivo?')) return; localStorage.removeItem('ht-clave'); clave = ''; pintarEntrada(); };
 }
 
 // Cifrado híbrido con WebCrypto: clave AES de un solo uso, envuelta con la pública RSA del panel.
@@ -249,16 +388,40 @@ async function cifrar(texto) {
   return { clave: b64(claveAes), iv: b64(iv), datos: b64(datos) };
 }
 
-function fallo(e) { if (e.clave) { pintarEntrada(true); } else { aviso(e.message || String(e), 6000); } }
+// Entrada. Dos formas, las dos en la parte del enlace que no viaja a ningún servidor (#...), y se quitan de la barra:
+//  #entrada=<id>.<llave>  enlace de un solo uso: la llave abre entradas/<id>.json (el acceso cifrado); al usarse queda
+//                         marcado y el ordenador de Lucas lo borra.
+//  #clave=<acceso>        el código de «Otros dispositivos».
+async function entrar() {
+  const hash = location.hash; history.replaceState(null, '', location.pathname);
+  const mc = hash.match(/clave=([^&]+)/), me = hash.match(/entrada=([\w-]+)\.([\w-]+)/);
+  if (mc) { clave = decodeURIComponent(mc[1]); localStorage.setItem('ht-clave', clave); return; }
+  if (!me) return;
+  const [, id, llave] = me;
+  const r = await fetch(`entradas/${id}.json`, { cache: 'no-store' });
+  if (!r.ok) { if (!clave) throw new Error('Este enlace ya se usó o ha caducado. Pídele uno nuevo a Lucas, o entra desde otro dispositivo en «Otros dispositivos».'); return; }
+  const j = await r.json();
+  const k = await crypto.subtle.importKey('raw', deB64(llave), 'AES-GCM', false, ['decrypt']);
+  const nueva = new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: deB64(j.iv) }, k, deB64(j.datos)));
+  const previa = clave; clave = nueva;
+  const usada = await gh(`/contents/entradas-usadas/${id}.json?ref=${C.rama}`);
+  if (usada.ok) { clave = previa; if (!clave) throw new Error('Este enlace ya se usó. Pídele uno nuevo a Lucas, o entra desde otro dispositivo en «Otros dispositivos».'); return; }
+  await gh(`/contents/entradas-usadas/${id}.json`, { method: 'PUT', body: JSON.stringify({ message: 'enlace de entrada usado', content: deTexto(JSON.stringify({ cuando: ahora() })), branch: C.rama }) });
+  localStorage.setItem('ht-clave', clave);
+}
+
+function fallo(e) { if (e.clave) { localStorage.removeItem('ht-clave'); clave = ''; pintarEntrada('El acceso de este dispositivo ya no vale. Pídele un enlace nuevo a Lucas.'); } else { aviso(e.message || String(e), 7000); } }
 async function conBoton(boton, f) { boton.disabled = true; try { await f(); } catch (e) { fallo(e); } finally { boton.disabled = false; } }
 async function recargar() { await cargar(); pintar(); }
 async function arrancar() {
-  if (!clave) return pintarEntrada(false);
+  try { await entrar(); } catch (e) { return pintarEntrada(e.message); }
+  if (!clave) return pintarEntrada();
   $('#main').innerHTML = '<p class="nota">Cargando…</p>';
   try { await recargar(); } catch (e) { fallo(e); }
 }
-document.querySelectorAll('nav button').forEach((b) => b.onclick = () => { vista = b.dataset.v; pintar(); });
-setInterval(() => { if (clave && vista !== 'conexiones' && !document.querySelector('video, details[open]') && !document.activeElement.matches('input, textarea, select') && ![...document.querySelectorAll('#n-titulo, #n-yt, #n-letra')].some((x) => x.value)) recargar().catch(() => {}); }, 60000);
+$$('nav button').forEach((b) => b.onclick = () => { vista = b.dataset.v; pintar(); });
+const ocupado = () => document.querySelector('video, details[open], #qr') || document.activeElement.matches('input, textarea, select') || $$('input:not([type=radio]):not([type=checkbox]), textarea').some((x) => !x.closest('details') && x.value);
+setInterval(() => { if (clave && !$('#nav').hidden && ['canciones', 'recursos', 'cola'].includes(vista) && !ocupado()) recargar().catch(() => {}); }, 60000);
 arrancar();
 </script>
 </body>

@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <title>Hidden Trio · Panel</title>
 <style>
-  :root { --fondo:#0a1322; --caja:#111e33; --borde:#22344f; --texto:#e8eef7; --suave:#8fa3bd; --azul:#a6d9f5; --crema:#f8f3e6; --ok:#7fd6a0; --mal:#f08a7c; --espera:#f2cf7a; }
+  :root { color-scheme:dark; --fondo:#0a1322; --caja:#111e33; --borde:#22344f; --texto:#e8eef7; --suave:#8fa3bd; --azul:#a6d9f5; --crema:#f8f3e6; --ok:#7fd6a0; --mal:#f08a7c; --espera:#f2cf7a; }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--fondo); color:var(--texto); font:16px/1.45 "Segoe UI", system-ui, sans-serif; }
   header { padding:22px 20px 8px; max-width:1080px; margin:auto; display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; }
@@ -38,7 +38,7 @@
   .short video, .short .hueco { width:100%; aspect-ratio:9/16; border-radius:8px; background:#060d18; }
   .short .hueco { display:flex; align-items:center; justify-content:center; color:var(--suave); cursor:pointer; border:1px dashed var(--borde); font-size:15px; }
   .short b { color:var(--crema); } .short small { color:var(--suave); }
-  .short .txt { font-size:13px; color:var(--suave); white-space:pre-wrap; max-height:110px; overflow:auto; }
+  .short .txt { font-size:13px; color:var(--suave); white-space:pre-wrap; }
   .mini { display:flex; gap:6px; flex-wrap:wrap; } .mini button { font-size:13px; padding:5px 10px; }
   details summary { cursor:pointer; color:var(--azul); margin-top:12px; }
   #aviso { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:#06121f; border:1px solid var(--azul); padding:10px 18px; border-radius:10px; display:none; max-width:90vw; z-index:9; }
@@ -149,7 +149,7 @@ function pintarCanciones() {
     <div class="shorts">${(c.res.shorts || []).map((s) => { const d = c.dec[s.fichero]?.estado || 'nuevo'; return `
       <div class="short ${d}" data-f="${h(s.fichero)}">
         <div class="hueco" data-ver>▶ Ver</div>
-        <div><b>${h(s.titulo || s.tipo)}</b><br><small>${h(s.tipo)} · del ${s.desde} al ${s.hasta} s</small></div>
+        <div><b>${h(s.titulo || s.tipo)}</b><br><small>${h(tipo(s.tipo))} · del ${s.desde} al ${s.hasta} s</small></div>
         <div class="txt">${h([s.descripcion, s.hashtags].filter(Boolean).join('\n\n') || s.letra)}</div>
         <div class="mini">
           <button class="b ${d === 'aprobado' ? '' : 'sec'}" data-dec="aprobado">${d === 'aprobado' ? '✓ Aprobado' : 'Aprobar'}</button>
@@ -218,6 +218,8 @@ function pintarCola() {
     ${cola.length ? `<ol class="cola">${cola.map((x) => `<li><b>${h(x.c.titulo)}</b> · ${h(x.s.titulo || x.s.tipo)} <small class="nota">(${h(x.s.fichero)}, aprobado el ${new Date(x.cuando).toLocaleDateString('es')})</small></li>`).join('')}</ol>` : '<p class="nota">No hay ninguno aprobado.</p>'}</div>`;
 }
 
+const TIPOS = { subida: 'Subida al estribillo', drop: 'Drop', energia: 'Momento más fuerte', puente: 'Puente' };
+const tipo = (t) => TIPOS[t] || t.replace(/^estribillo(\d+)$/, 'Estribillo $1');
 const REDES = [
   ['youtube', 'YouTube', 'El canal de Hidden Trio. Hace falta que el dueño del canal dé permiso a la aplicación de subida; se hace una vez con Lucas en una llamada. Si ya tienes los datos (client id, client secret y refresh token), pégalos aquí.'],
   ['tiktok', 'TikTok', 'La cuenta de TikTok del grupo. Apunta aquí el usuario y, si ya existen, los datos de acceso de la aplicación de publicación.'],
